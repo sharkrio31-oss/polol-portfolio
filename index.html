@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>POLOLVERSE 🐈⬛🌸</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Fallback for no JS -->
+    <noscript>
+        <div id="no-js">
+            <h1>POLOLVERSE</h1>
+            <p>Please enable JavaScript to explore the 3D portfolio.</p>
+        </div>
+    </noscript>
+
+    <!-- WebGL Canvas -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="cat-loader">
+                <div class="cat-head">
+                    <div class="cat-ears"></div>
+                    <div class="cat-eyes"></div>
+                </div>
+                <div class="cat-body"></div>
+                <div class="cat-tail"></div>
+            </div>
+            <h1 class="glow-text">Entering POLOLVERSE</h1>
+            <div class="progress-bar-container">
+                <div id="progress-bar"></div>
+            </div>
+            <p id="loading-text">Generating world...</p>
+        </div>
+    </div>
+
+    <!-- UI Layer -->
+    <div id="ui-layer" class="hidden">
+        
+        <!-- Controls Help -->
+        <button id="help-btn" class="glass-btn">?</button>
+        <div id="help-panel" class="glass-panel hidden">
+            <button class="close-btn">&times;</button>
+            <h2>Controls</h2>
+            <div class="controls-grid">
+                <div class="control-item"><span>Left Click & Drag</span><p>Rotate Camera</p></div>
+                <div class="control-item"><span>Right Click & Drag</span><p>Pan Camera</p></div>
+                <div class="control-item"><span>Scroll</span><p>Zoom</p></div>
+                <div class="control-item"><span>Click Objects</span><p>Interact</p></div>
+                <div class="control-item"><span>Double-Click</span><p>Focus Object</p></div>
+                <div class="control-item"><span>R</span><p>Reset Camera</p></div>
+            </div>
+            <button id="reset-cam-btn" class="glass-btn small" style="margin-top: 15px;">Reset Camera</button>
+        </div>
+
+        <!-- Star Counter -->
+        <div id="star-counter" class="glass-panel" style="position: absolute; top: 20px; left: 20px; padding: 10px 20px; transition: transform 0.2s;">
+            <span style="font-size: 1.5rem; vertical-align: middle;">⭐</span>
+            <span id="star-count" style="font-size: 1.5rem; font-weight: bold; margin-left: 10px;">0</span>
+        </div>
+
+        <!-- Navigation Menu -->
+        <div id="main-nav" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 40;">
+            <button class="nav-btn glass-btn small" data-target="about">About</button>
+            <button class="nav-btn glass-btn small" data-target="projects">Projects</button>
+            <button class="nav-btn glass-btn small" data-target="games">Games</button>
+            <button class="nav-btn glass-btn small" data-target="sidequests">Side Quests</button>
+        </div>
+
+        <!-- Tooltip for hover -->
+        <div id="tooltip" class="hidden" style="position: absolute; top: calc(50% + 20px); left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; pointer-events: none; transition: opacity 0.2s; z-index: 50;">Click to interact</div>
+
+
+        <!-- Content Panels -->
+
+        <!-- About Me (Journal) -->
+        <div id="panel-about" class="content-panel glass-panel hidden">
+            <button class="close-btn">&times;</button>
+            <h2>About Polol 🐈</h2>
+            <p style="font-style: italic; color: #888; margin-bottom: 15px;">"just a curious internet creature trying to understand everything :3"</p>
+            <ul style="padding-left: 20px; line-height: 1.6;">
+                <li>Introverted and shy in person, but much more playful online.</li>
+                <li>Curious about how things work, especially computers, mathematics, physics, and AI.</li>
+                <li>Enjoys exploring ideas, finding patterns, experimenting, and learning independently.</li>
+                <li>Has a silly, chaotic sense of humor and a soft spot for cute cat-themed aesthetics.</li>
+                <li>Often jumps between different interests and projects.</li>
+            </ul>
+        </div>
+
+        <!-- Projects (Computer/Terminal) -->
+        <div id="panel-projects" class="content-panel glass-panel hidden">
+            <button class="close-btn">&times;</button>
+            <h2>Projects & Experiments 💻</h2>
+            <div class="project-list">
+                <div class="card">
+                    <h3>PolAI 🤖</h3>
+                    <p>A local AI assistant experiment focused on running a language model entirely locally using llama.cpp.</p>
+                    <span class="badge">In Progress</span>
+                </div>
+                <div class="card">
+                    <h3>Pololverse 🌌</h3>
+                    <p>An interactive, explorable 3D personal portfolio built from scratch with Three.js (You are here!).</p>
+                    <span class="badge" style="background: var(--mint);">Completed</span>
+                </div>
+                <div class="card" style="opacity: 0.7;">
+                    <h3>Future Experiments 🧪</h3>
+                    <p>Always plotting new side quests. More web experiments, game mechanics, and tech tinkering coming soon.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Games Section Panels -->
+        <div id="panel-gd" class="content-panel glass-panel hidden">
+            <button class="close-btn">&times;</button>
+            <h2>Geometry Dash 🧊</h2>
+            <p>My main game and a major part of my gaming identity. I enjoy challenging levels, improving through repeated attempts, and learning difficult sections through practice.</p>
+            <p><strong>Achievements:</strong> Beaten Nine Circles. Working on harder levels like Jawbreaker and Niwa.</p>
+        </div>
+
+        <div id="panel-bs" class="content-panel glass-panel hidden">
+            <button class="close-btn">&times;</button>
+            <h2>Blood Strike 🎯</h2>
+            <p>A fast-paced shooter I enjoy for gunplay, movement, ranked progression, and improving my performance. I've spent a lot of time grinding ranked matches and weapon leaderboards.</p>
+        </div>
+
+        <div id="panel-genshin" class="content-panel glass-panel hidden">
+            <button class="close-btn">&times;</button>
+            <h2>Genshin Impact 🌪️</h2>
+            <p>One of my favorite gaming interests, offering a beautiful fantasy world to explore and elemental mechanics to master.</p>
+        </div>
+
+        <div id="panel-roblox" class="content-panel glass-panel hidden">
+            <button class="close-btn">&times;</button>
+            <h2>Roblox 🧱</h2>
+            <p>A playful, blocky world full of endless user-generated games and fun casual experiences.</p>
+        </div>
+
+        <!-- Side Quests (Interests) Panels -->
+        <div id="panel-math" class="content-panel glass-panel hidden">
+            <button class="close-btn">&times;</button>
+            <h2>Mathematics 📐</h2>
+            <p>I enjoy exploring patterns, proofs, number theory, and unusual mathematical ideas.</p>
+        </div>
+
+        <div id="panel-physics" class="content-panel glass-panel hidden">
+            <button class="close-btn">&times;</button>
+            <h2>Physics ⚛️</h2>
+            <p>I like understanding the mechanisms behind things, exploring concepts, and following interesting ideas beyond the basic explanation.</p>
+        </div>
+
+        <div id="panel-pc" class="content-panel glass-panel hidden">
+            <button class="close-btn">&times;</button>
+            <h2>PC Tinkering ⚙️</h2>
+            <p>I enjoy experimenting with PC performance, software, operating systems, and troubleshooting technical problems.</p>
+        </div>
+
+        <div id="panel-ai" class="content-panel glass-panel hidden">
+            <button class="close-btn">&times;</button>
+            <h2>Local AI 🧠</h2>
+            <p>Fascinated by AI, I experiment with running small language models locally. I built my own personal assistant, PolAI.</p>
+        </div>
+
+        <div id="panel-music" class="content-panel glass-panel hidden">
+            <button class="close-btn">&times;</button>
+            <h2>Music 🎵</h2>
+            <p>Music is a huge part of my gaming and computer time. [Space reserved for future favorite artists and tracks!]</p>
+        </div>
+
+        <!-- Personality / Cat -->
+        <div id="panel-cat" class="content-panel glass-panel hidden">
+            <button class="close-btn">&times;</button>
+            <div class="cat-message">
+                <h2 id="cat-title">Meow! 🐾</h2>
+                <p id="cat-text">"Hi, I'm Polol! I like building cozy things on the internet."</p>
+                <div class="cat-emotes">🌸 💻 ☕ 🐈⬛</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Import Map for Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="./src/main.js"></script>
+</body>
+</html>
