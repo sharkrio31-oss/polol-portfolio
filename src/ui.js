@@ -18,7 +18,9 @@ export class UI {
             'pc': document.getElementById('panel-pc'),
             'ai': document.getElementById('panel-ai'),
             'music': document.getElementById('panel-music'),
-            'cat': document.getElementById('panel-cat')
+            'cat': document.getElementById('panel-cat'),
+            'observatory': document.getElementById('panel-observatory'),
+            'secret': document.getElementById('panel-secret')
         };
 
         this.catMessages = [

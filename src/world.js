@@ -644,4 +644,15 @@ export class World {
             });
         }
     }
+
+    destroy() {
+        if (this.materials) {
+            Object.values(this.materials).forEach(mat => {
+                if (mat && typeof mat.dispose === 'function') mat.dispose();
+            });
+        }
+        this.interactables = [];
+        this.animatedObjects = [];
+        this.cats = [];
+    }
 }

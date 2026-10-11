@@ -73,7 +73,7 @@ export class InteractionManager {
                 if (index > -1) this.interactables.splice(index, 1);
                 this.resetHover();
             } else if (id === 'portal') {
-                this.ui.showTooltip("Whoosh!");
+                this.ui.showPanel('secret');
             } else if (id) {
                 this.ui.showPanel(id);
                 // Do not instantly snap the camera on single click, let manual control or double-click handle it
